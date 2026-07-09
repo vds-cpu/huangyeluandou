@@ -29,6 +29,14 @@ body{
     background:#080b18;
     color:#fff;
     overflow-x:hidden;
+    padding-left:
+    env(safe-area-inset-left);
+    padding-right:
+    env(safe-area-inset-right);
+    padding-top:
+    env(safe-area-inset-top);
+    padding-bottom:
+    env(safe-area-inset-bottom);
 }
 
 /*==============================
@@ -44,6 +52,9 @@ Loading
     align-items:center;
     flex-direction:column;
     background:#09091d;
+    transition:
+    opacity .6s ease,
+    visibility .6s ease;
 }
 
 .loader-ring{
@@ -152,6 +163,8 @@ Hero
 }
 
 .hero-card{
+    position:relative;
+    overflow:hidden;
     backdrop-filter:blur(18px);
     background:var(--card);
     border:1px solid var(--border);
@@ -159,6 +172,37 @@ Hero
     padding:50px;
     text-align:center;
     box-shadow:var(--shadow);
+    animation:
+    heroFloat 5s ease-in-out infinite;
+}
+
+.hero-card::after{
+    content:"";
+    position:absolute;
+    left:var(--x);
+    top:var(--y);
+    width:220px;
+    height:220px;
+    transform:
+    translate(-50%,-50%);
+    border-radius:50%;
+    background:
+    radial-gradient(
+    rgba(255,255,255,.18),
+    transparent 70%);
+    pointer-events:none;
+    opacity:.8;
+}
+
+@keyframes heroFloat{
+    0%,100%{
+        transform:
+        translateY(0);
+    }
+    50%{
+        transform:
+        translateY(-8px);
+    }
 }
 
 .logo{
@@ -218,6 +262,8 @@ Hero
 }
 
 .enter-btn{
+    position:relative;
+    overflow:hidden;
     display:inline-flex;
     justify-content:center;
     align-items:center;
@@ -234,12 +280,32 @@ Hero
     box-shadow:
     0 10px 40px rgba(107,50,255,.45);
     transition:.35s;
+    animation:
+    pulse 2.5s infinite;
 }
 
 .enter-btn:hover{
     transform:translateY(-4px);
     box-shadow:
     0 18px 55px rgba(107,50,255,.75);
+}
+
+@keyframes pulse{
+    0%{
+        box-shadow:
+        0 0 0
+        rgba(107,50,255,0);
+    }
+    50%{
+        box-shadow:
+        0 0 35px
+        rgba(107,50,255,.45);
+    }
+    100%{
+        box-shadow:
+        0 0 0
+        rgba(107,50,255,0);
+    }
 }
 
 /*==========================================
@@ -577,6 +643,110 @@ Glow Animation
 
 .reward-card{
     animation:glow 5s infinite;
+}
+
+/*==========================================
+Particle
+==========================================*/
+
+.particle{
+    position:fixed;
+    bottom:-20px;
+    width:8px;
+    height:8px;
+    border-radius:50%;
+    background:rgba(255,255,255,.9);
+    box-shadow:
+    0 0 12px rgba(255,255,255,.9),
+    0 0 25px rgba(107,50,255,.5);
+    animation:particleMove linear forwards;
+    pointer-events:none;
+    z-index:-1;
+}
+
+@keyframes particleMove{
+    from{
+        transform:
+        translateY(0)
+        scale(1);
+    }
+    to{
+        transform:
+        translateY(-120vh)
+        scale(.2);
+        opacity:0;
+    }
+}
+
+/*==========================================
+Ripple
+==========================================*/
+
+.ripple{
+    position:absolute;
+    border-radius:50%;
+    transform:scale(0);
+    background:
+    rgba(255,255,255,.45);
+    animation:ripple .7s linear;
+    pointer-events:none;
+}
+
+@keyframes ripple{
+    to{
+        transform:scale(4);
+        opacity:0;
+    }
+}
+
+/*==========================================
+Touch Effect
+==========================================*/
+
+.touch{
+    transform:scale(.98);
+    transition:.15s;
+}
+
+/*==========================================
+Back To Top
+==========================================*/
+
+.backTop{
+    position:fixed;
+    right:22px;
+    bottom:22px;
+    width:56px;
+    height:56px;
+    border:none;
+    border-radius:50%;
+    background:
+    linear-gradient(
+    135deg,
+    #6b32ff,
+    #8d57ff);
+    color:#fff;
+    font-size:22px;
+    cursor:pointer;
+    opacity:0;
+    transform:
+    translateY(30px);
+    transition:.35s;
+    z-index:999;
+    box-shadow:
+    0 12px 35px
+    rgba(107,50,255,.45);
+}
+
+.backTop.show{
+    opacity:1;
+    transform:
+    translateY(0);
+}
+
+.backTop:hover{
+    transform:
+    translateY(-5px);
 }
 
 /*==========================================
